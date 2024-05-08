@@ -1,10 +1,102 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        iframe {
+            width: 100vw;
+            height: calc(100vh - 30px);
+            border: none;
+            display: block; /* Ensure the iframe is visible */
+        }
+        footer {
+            text-align: center;
+            padding: 0.02em 0;
+            background-color: #F0EEEE;
+            color: black;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .reload-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 999;
+            width: 40px;
+            height: 40px;
+        }
+        .pencil-image {
+            width: 50px;
+            height: 50px;
+            background-image: url('images/pencile.png');
+            background-size: cover;
+            border-radius: 50%;
+        }
+        .no-internet-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #000000;
+        }
+    </style>
+</head>
 <body>
+<div id="internetCheck" class="no-internet-message" style="display:none;">
+    No Internet Connection
+</div>
+<iframe
+    id="mainFrame"
+    src="https://app.droxy.ai/guest-chatbot/662e3816daafede26aa37ea2"
+    width="100%"
+    height="100%"
+    frameborder="0">
+</iframe>
+<footer>
+    <p> Selena.ai All rights reserved by Selena.ai</p>
+</footer>
+<button class="reload-button" onclick="reloadPage()">
+    <div class="pencil-image"></div>
+</button>
 
+<script>
+    function reloadPage() {
+        location.reload();
+    }
 
-<img src="images/logo.png" alt="" width="50" height="80">
+    // Check internet connection status
+    function checkInternet() {
+        var internetCheckDiv = document.getElementById("internetCheck");
+        var mainFrame = document.getElementById("mainFrame");
 
+        if (!navigator.onLine) {
+            internetCheckDiv.style.display = "flex";
+            mainFrame.style.display = "none";
+        } else {
+            internetCheckDiv.style.display = "none";
+            mainFrame.style.display = "block";
+        }
+    }
+
+    // Call checkInternet() initially and add event listener for online/offline changes
+    checkInternet();
+    window.addEventListener('online', checkInternet);
+    window.addEventListener('offline', checkInternet);
+</script>
 </body>
 </html>
-
